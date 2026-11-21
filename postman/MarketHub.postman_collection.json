@@ -1,0 +1,222 @@
+{
+  "info": {
+    "name": "MarketHub Firebase API Tests",
+    "description": "Authentication and Firestore REST API tests for the MarketHub application.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "apiKey", "value": "AIzaSyCPDwgYUi5YJvGSYwsMLWApNPj9XXlzWcM" },
+    { "key": "firestoreUrl", "value": "https://firestore.googleapis.com/v1/projects/ecommerce-3566b/databases/(default)/documents" },
+    { "key": "authUrl", "value": "https://identitytoolkit.googleapis.com/v1/accounts" },
+    { "key": "idToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Admin Sign In",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const body = pm.response.json();",
+                "if (pm.response.code === 200 && body.idToken) {",
+                "  pm.environment.set('idToken', body.idToken);",
+                "  pm.collectionVariables.set('idToken', body.idToken);",
+                "}",
+                "pm.test('Admin login succeeds', function () {",
+                "  pm.expect(pm.response.code).to.eql(200);",
+                "  pm.expect(body.idToken).to.exist;",
+                "});"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"returnSecureToken\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{authUrl}}:signInWithPassword?key={{apiKey}}",
+              "host": ["{{authUrl}}"],
+              "path": ["signInWithPassword"],
+              "query": [{ "key": "key", "value": "{{apiKey}}" }]
+            }
+          }
+        },
+        {
+          "name": "Customer Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@example.com\",\n  \"password\": \"Customer@123\",\n  \"returnSecureToken\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{authUrl}}:signUp?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Send Password Reset",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"PASSWORD_RESET\",\n  \"email\": \"customer@example.com\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{authUrl}}:sendOobCode?key={{apiKey}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Firestore",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}" }],
+            "url": "{{firestoreUrl}}/products?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Create Product P999",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"ID\": { \"stringValue\": \"P999\" },\n    \"Cat_ID\": { \"stringValue\": \"C01\" },\n    \"Title\": { \"stringValue\": \"Postman Test Product\" },\n    \"Description\": { \"stringValue\": \"Created using Postman\" },\n    \"Quantity\": { \"integerValue\": \"25\" },\n    \"Price\": { \"doubleValue\": 99.99 },\n    \"Image\": { \"stringValue\": \"assets/images/products/default.jpg\" },\n    \"Active\": { \"booleanValue\": true }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/products?documentId=P999&key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Get Product P999",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}" }],
+            "url": "{{firestoreUrl}}/products/P999?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Update Product P999",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"Quantity\": { \"integerValue\": \"30\" },\n    \"Price\": { \"doubleValue\": 109.99 }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/products/P999?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Delete Product P999",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}" }],
+            "url": "{{firestoreUrl}}/products/P999?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Create Category C99",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"ID\": { \"stringValue\": \"C99\" },\n    \"Name\": { \"stringValue\": \"Postman Test Category\" }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/categories?documentId=C99&key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Create Customer CU999",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"ID\": { \"stringValue\": \"CU999\" },\n    \"Name\": { \"stringValue\": \"Postman Customer\" },\n    \"Email\": { \"stringValue\": \"postman.customer@example.com\" },\n    \"Mobile\": { \"stringValue\": \"9876543210\" },\n    \"CreditLimit\": { \"integerValue\": \"1000\" }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/customers?documentId=CU999&key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Create Order ORD999",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"ID\": { \"stringValue\": \"ORD999\" },\n    \"CustomerID\": { \"stringValue\": \"CU999\" },\n    \"CustomerName\": { \"stringValue\": \"Postman Customer\" },\n    \"CustomerEmail\": { \"stringValue\": \"postman.customer@example.com\" },\n    \"Delivery\": { \"mapValue\": { \"fields\": {\n      \"address\": { \"stringValue\": \"10 Test Street\" },\n      \"city\": { \"stringValue\": \"Test City\" },\n      \"state\": { \"stringValue\": \"Test State\" },\n      \"postal\": { \"stringValue\": \"500001\" },\n      \"country\": { \"stringValue\": \"India\" }\n    } } },\n    \"Items\": { \"arrayValue\": { \"values\": [\n      { \"mapValue\": { \"fields\": {\n        \"ID\": { \"stringValue\": \"P999\" },\n        \"Title\": { \"stringValue\": \"Postman Test Product\" },\n        \"Price\": { \"doubleValue\": 109.99 },\n        \"Quantity\": { \"integerValue\": \"1\" }\n      } } }\n    ] } },\n    \"Subtotal\": { \"doubleValue\": 109.99 },\n    \"Total\": { \"doubleValue\": 109.99 },\n    \"PaymentMethod\": { \"stringValue\": \"Cash\" },\n    \"PaymentStatus\": { \"stringValue\": \"Pending\" },\n    \"OrderStatus\": { \"stringValue\": \"Placed\" },\n    \"CreatedAt\": { \"stringValue\": \"2026-11-20T18:00:00.000Z\" }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/orders?documentId=ORD999&key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"OrderStatus\": { \"stringValue\": \"Shipped\" }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/orders/ORD999?key={{apiKey}}"
+          }
+        },
+        {
+          "name": "Mark Order Paid",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{idToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fields\": {\n    \"PaymentStatus\": { \"stringValue\": \"Paid\" }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{firestoreUrl}}/orders/ORD999?key={{apiKey}}"
+          }
+        }
+      ]
+    }
+  ]
+}

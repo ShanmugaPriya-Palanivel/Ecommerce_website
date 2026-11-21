@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory · MarketHub Admin</title>
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/admin.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body data-root="../../" data-page="inventory" data-title="Inventory">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+<div class="page-head"><div><h1>Inventory</h1><p>Manage products, stock and availability.</p></div><a class="btn btn-primary" href="product-form.html">+ Add product</a></div><div class="card"><div class="toolbar"><input type="search" id="search" placeholder="Search title, description, ID…" aria-label="Search">
+<select id="cat-filter" aria-label="Category"></select>
+<select id="status-filter" aria-label="Status"><option value="">All status</option><option value="in">In stock</option><option value="low">Low stock</option><option value="out">Out of stock</option><option value="inactive">Inactive</option></select>
+<select id="sort" aria-label="Sort"><option value="id">Sort: ID</option><option value="title-asc">Title A–Z</option><option value="title-desc">Title Z–A</option><option value="price-asc">Price low–high</option><option value="price-desc">Price high–low</option><option value="qty-asc">Quantity low–high</option><option value="qty-desc">Quantity high–low</option></select></div>
+<div class="table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th><th>Stock</th><th>Active</th><th></th></tr></thead><tbody id="product-rows"></tbody></table></div><div class="pagination" id="pager"></div></div>
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../../services/firebase-config.js"></script>
+<script src="../../services/seed-data.js"></script>
+<script src="../../services/api-service.js"></script>
+<script src="../../services/auth-service.js"></script>
+<script src="../../services/category-service.js"></script>
+<script src="../../services/product-service.js"></script>
+<script src="../../services/customer-service.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/inventory.js"></script>
+</body>
+</html>

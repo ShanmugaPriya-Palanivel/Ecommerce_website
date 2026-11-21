@@ -1,0 +1,6 @@
+@media(max-width:1024px){.stats-grid{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}}
+@media(max-width:900px){
+ .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:transform .25s;z-index:40}
+ .nav-open .sidebar{transform:none}.nav-open .overlay{display:block}.menu-btn{display:inline-flex}
+ .content{padding:1rem}.topbar{padding:.8rem 1rem}.form-grid,.credit-panel{grid-template-columns:1fr}}
+@media(max-width:560px){.stats-grid{grid-template-columns:1fr}.toolbar>*{flex:1 1 100%!important}.admin-email{display:none}.bar-row{grid-template-columns:90px 1fr 44px}.login-wrap{background:var(--charcoal)}}
