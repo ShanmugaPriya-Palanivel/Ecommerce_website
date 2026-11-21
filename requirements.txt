@@ -1,0 +1,26 @@
+# MarketHub requirements
+#
+# Application dependencies:
+#   - HTML5
+#   - CSS3
+#   - Vanilla JavaScript
+#   - Firebase Authentication REST API
+#   - Cloud Firestore REST API
+#   - A static web server
+#
+# No Python package is required.
+# No Firebase JavaScript SDK or npm Firebase package is required.
+# This project does not use a Node.js backend.
+#
+# Recommended static server: VS Code Live Server
+#   Install: VS Code Extensions -> Live Server
+#   Start: Right-click index.html -> Open with Live Server
+#
+# Alternative static server:
+#   npm install
+#   npm start
+#   Open: http://localhost:8080
+#
+# Package install note:
+#   npm install installs only the optional static http-server package.
+#   The package has no effect on Firebase or application business logic.
