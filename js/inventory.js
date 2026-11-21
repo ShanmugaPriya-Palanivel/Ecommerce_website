@@ -70,7 +70,13 @@
     const cats = await CategoryService.list();
     el.Cat_ID.innerHTML = '<option value="">Select a category</option>' + cats.map((c) => `<option value="${esc(c.ID)}">${esc(c.Name)}</option>`).join('');
     if (!cats.length) { $('#no-cats').hidden = false; f.querySelector('[type=submit]').disabled = true; }
-    const setPrev = () => { prev.onerror = () => App.imgFallback(prev); prev.src = App.root + (el.Image.value.trim() || ProductService.DEFAULT_IMG); };
+    const setPrev = () => {
+      prev.onerror = () => App.imgFallback(prev);
+      const value = el.Image.value.trim() || ProductService.DEFAULT_IMG;
+      prev.src = /^https?:\/\//i.test(value) || /^\/\//.test(value)
+        ? value
+        : App.root + value;
+    };
     let touched = false;
     if (id) {
       const p = await ProductService.get(id);

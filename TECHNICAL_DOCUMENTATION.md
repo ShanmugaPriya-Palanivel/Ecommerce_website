@@ -295,10 +295,10 @@ The following browser flow passed on 2026-11-21:
 1. Customer signup with Firebase Authentication.
 2. UID collision-safe customer document creation.
 3. Customer profile creation.
-4. Account page showing correct name and `$1,000` credit limit.
+4. Account page showing correct name and `₹1,000.00` credit limit.
 5. Authenticated product catalogue loading.
 6. P001 added to cart.
-7. Cart showed `1` item and a `$129.99` total.
+7. Cart showed `1` item and a `₹129.99` total.
 8. Checkout displayed the customer details and order summary.
 9. Cash payment selection.
 10. Order `ORD1795202774650` created successfully.

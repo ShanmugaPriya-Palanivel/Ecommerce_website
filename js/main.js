@@ -2,7 +2,7 @@
 (function () {
   const App = (window.App = {});
   App.root = document.body.dataset.root || './';
-  App.config = { currency: '$', lowStock: 10, pageSize: 8 };
+  App.config = { currency: '₹', locale: 'en-IN', lowStock: 10, pageSize: 8 };
   App.params = new URLSearchParams(location.search);
 
   const P = {
@@ -24,7 +24,7 @@
   };
   App.icon = (n, s = 18) => `<svg class="ico" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`;
   App.esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  App.money = (n) => App.config.currency + Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  App.money = (n) => App.config.currency + Number(n).toLocaleString(App.config.locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   App.fmtDate = (iso) => new Date(iso).toLocaleString(undefined, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
   App.slug = (t) => String(t).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   App.debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -35,7 +35,13 @@
     el.onerror = null;
     el.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#e5e7eb"/><text x="50%" y="50%" fill="#6b7280" font-family="sans-serif" font-size="20" text-anchor="middle">No image</text></svg>');
   };
-  App.img = (path, alt, cls = 'thumb') => `<img class="${cls}" src="${App.root}${App.esc(path || 'assets/images/products/default.jpg')}" alt="${App.esc(alt)}" loading="lazy" onerror="App.imgFallback(this)">`;
+  App.img = (path, alt, cls = 'thumb') => {
+    const value = String(path || '').trim();
+    const src = /^https?:\/\//i.test(value) || /^\/\//.test(value)
+      ? value
+      : App.root + (value || 'assets/images/products/default.jpg');
+    return `<img class="${cls}" src="${App.esc(src)}" alt="${App.esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="App.imgFallback(this)">`;
+  };
   App.catImg = (id, name, cls = 'thumb') => App.img(`assets/images/categories/${id}.jpg`, name, cls);
 
   App.toast = (msg, type = 'success') => {

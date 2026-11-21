@@ -13,7 +13,22 @@ window.V = {
     if (n > 1e9) return `${label} is too large.`;
     return '';
   },
-  localPath: (v) => (/^(https?:)?\/\//i.test(String(v).trim()) ? 'External URLs are not allowed. Use a local path under assets/images/.' : ''),
+  localPath: (v) => {
+    const value = String(v == null ? '' : v).trim();
+    if (!value) return '';
+    if (/^https?:\/\//i.test(value)) {
+      try {
+        const url = new URL(value);
+        return url.protocol === 'https:' || url.protocol === 'http:' ? '' : 'Enter a valid HTTP or HTTPS image URL.';
+      } catch (e) {
+        return 'Enter a valid image URL.';
+      }
+    }
+    if (/^\/\//.test(value) || value.startsWith('/') || /^[a-z][a-z0-9+.-]*:/i.test(value)) {
+      return 'Enter an HTTPS image URL or a local path under assets/images/.';
+    }
+    return '';
+  },
   /* Shows messages under fields named in errs ({fieldName: message}); returns true when all valid. */
   showErrors(form, errs) {
     form.querySelectorAll('.field-error').forEach((e) => (e.textContent = ''));
