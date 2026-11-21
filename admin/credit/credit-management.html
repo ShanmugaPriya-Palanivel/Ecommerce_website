@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credit limits · MarketHub Admin</title>
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/admin.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body data-root="../../" data-page="credit" data-title="Credit limits">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+<div class="page-head"><div><h1>Credit limits</h1><p>Select a customer and update their credit limit.</p></div></div><div class="card" style="margin-bottom:1rem"><p id="pick-hint" class="state">Select a customer from the table below to update their credit limit.</p>
+<form id="credit-form" novalidate hidden><div class="credit-panel"><div><h3 id="sel-name"></h3><p class="hint">Current credit limit</p><b style="font-size:1.6rem" id="sel-current"></b></div>
+<div><div class="field"><label for="CreditLimit">New credit limit *</label><input id="CreditLimit" name="CreditLimit" type="number" min="0" step="0.01"><span class="field-error" data-err="CreditLimit"></span></div><button class="btn btn-primary" type="submit">Update credit limit</button></div></div></form></div>
+<div class="card"><div class="toolbar"><input type="search" id="search" placeholder="Search customers…" aria-label="Search"></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th class="num">Credit limit</th><th></th></tr></thead><tbody id="credit-rows"></tbody></table></div></div>
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../../services/firebase-config.js"></script>
+<script src="../../services/seed-data.js"></script>
+<script src="../../services/api-service.js"></script>
+<script src="../../services/auth-service.js"></script>
+<script src="../../services/category-service.js"></script>
+<script src="../../services/product-service.js"></script>
+<script src="../../services/customer-service.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/credit.js"></script>
+</body>
+</html>

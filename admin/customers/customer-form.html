@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer · MarketHub Admin</title>
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/admin.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body data-root="../../" data-page="customers" data-title="Customer">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+<div class="page-head"><div><h1><span id="form-title">Add customer</span></h1><p>All fields marked * are required.</p></div></div><div class="card" style="max-width:820px"><p id="form-state" class="state" hidden>Record not found. <a href="customer-list.html">Back to list</a></p>
+<form id="customer-form" novalidate><div class="form-grid"><div class="field"><label for="ID">Customer ID</label><input id="ID" name="ID" type="text" readonly><span class="field-error" data-err="ID"></span></div><div class="field"><label for="Name">Full name *</label><input id="Name" name="Name" type="text" autocomplete="off"><span class="field-error" data-err="Name"></span></div><div class="field"><label for="Email">Email *</label><input id="Email" name="Email" type="email" autocomplete="off"><span class="field-error" data-err="Email"></span></div><div class="field"><label for="Mobile">Mobile *</label><input id="Mobile" name="Mobile" type="tel" autocomplete="off"><span class=hint>10–13 digits, optional leading +.</span><span class="field-error" data-err="Mobile"></span></div><div class="field"><label for="CreditLimit">Credit limit</label><input id="CreditLimit" name="CreditLimit" type="number" min="0" step="0.01"><span class=hint>Defaults to 0 for new customers.</span><span class="field-error" data-err="CreditLimit"></span></div></div>
+<div class="form-actions"><button class="btn btn-primary" type="submit">Save</button><a class="btn btn-ghost" href="customer-list.html">Cancel</a></div></form></div>
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../../services/firebase-config.js"></script>
+<script src="../../services/seed-data.js"></script>
+<script src="../../services/api-service.js"></script>
+<script src="../../services/auth-service.js"></script>
+<script src="../../services/category-service.js"></script>
+<script src="../../services/product-service.js"></script>
+<script src="../../services/customer-service.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/customer.js"></script>
+</body>
+</html>

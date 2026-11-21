@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Report · MarketHub Admin</title>
+<meta name="description" content="Customer reports — all customers, top 10 by credit, cash and credit purchase history with date range filtering.">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/admin.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body data-root="../../" data-page="report-customers" data-title="Customer Report">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+
+<div class="page-head">
+  <div>
+    <h1>Customer Report</h1>
+    <p>Analyse customer accounts, credit limits and purchase history.</p>
+  </div>
+  <button class="btn btn-ghost" onclick="window.print()">🖨 Print</button>
+</div>
+
+<!-- Date range filter -->
+<div class="card report-filter-bar">
+  <div class="toolbar">
+    <div class="field">
+      <label for="date-from">From date</label>
+      <input type="date" id="date-from">
+    </div>
+    <div class="field">
+      <label for="date-to">To date</label>
+      <input type="date" id="date-to">
+    </div>
+    <button class="btn btn-primary" id="apply-filter">Apply</button>
+    <button class="btn btn-ghost"   id="clear-filter">Clear</button>
+  </div>
+</div>
+
+<!-- Tab nav -->
+<div class="report-tabs">
+  <button class="rtab active" data-tab="all">All Customers</button>
+  <button class="rtab" data-tab="top10">Top 10 by Credit</button>
+  <button class="rtab" data-tab="cash">Cash Purchases</button>
+  <button class="rtab" data-tab="credit">Credit Purchases</button>
+</div>
+
+<!-- All Customers -->
+<div class="report-panel" id="tab-all">
+  <div class="card">
+    <div class="card-head"><h3>All Customers</h3><span id="all-count" class="badge off"></span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th class="num">Credit Limit</th></tr></thead>
+        <tbody id="all-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Top 10 by Credit -->
+<div class="report-panel hidden" id="tab-top10">
+  <div class="card">
+    <div class="card-head"><h3>Top 10 Customers by Credit Limit</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rank</th><th>ID</th><th>Name</th><th>Email</th><th class="num">Credit Limit</th></tr></thead>
+        <tbody id="top10-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Cash Purchases -->
+<div class="report-panel hidden" id="tab-cash">
+  <div class="card">
+    <div class="card-head"><h3>Cash Purchase Orders</h3><span id="cash-total" class="badge ok"></span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Date</th><th class="num">Items</th><th class="num">Total</th><th>Status</th></tr></thead>
+        <tbody id="cash-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Credit Purchases -->
+<div class="report-panel hidden" id="tab-credit">
+  <div class="card">
+    <div class="card-head"><h3>Credit Purchase Orders</h3><span id="credit-total" class="badge warn"></span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Date</th><th class="num">Items</th><th class="num">Total</th><th>Payment</th><th>Status</th></tr></thead>
+        <tbody id="credit-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../../services/firebase-config.js"></script>
+<script src="../../services/seed-data.js"></script>
+<script src="../../services/api-service.js"></script>
+<script src="../../services/auth-service.js"></script>
+<script src="../../services/category-service.js"></script>
+<script src="../../services/product-service.js"></script>
+<script src="../../services/customer-service.js"></script>
+<script src="../../services/order-service.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/customer-report.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory Report · MarketHub Admin</title>
+<meta name="description" content="Inventory report — current stock levels, category-wise breakdown, high stock and low stock alerts.">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/admin.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body data-root="../../" data-page="report-inventory" data-title="Inventory Report">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+
+<div class="page-head">
+  <div>
+    <h1>Inventory Report</h1>
+    <p>Current stock levels, category analysis and stock alerts.</p>
+  </div>
+  <button class="btn btn-ghost" onclick="window.print()">🖨 Print</button>
+</div>
+
+<!-- Summary cards -->
+<section class="stats-grid" id="inv-stats"></section>
+
+<!-- Tab nav -->
+<div class="report-tabs">
+  <button class="rtab active" data-tab="all-stock">All Stock</button>
+  <button class="rtab" data-tab="cat-wise">Category Wise</button>
+  <button class="rtab" data-tab="high-stock">High Stock (&gt;100)</button>
+  <button class="rtab" data-tab="low-stock">Low Stock (&lt;15)</button>
+</div>
+
+<!-- All Stock -->
+<div class="report-panel" id="tab-all-stock">
+  <div class="card">
+    <div class="card-head"><h3>All Products — Current Stock</h3><span id="all-stock-count" class="badge off"></span></div>
+    <div class="toolbar">
+      <input type="search" id="stock-search" placeholder="Search product…">
+      <select id="stock-cat"><option value="">All categories</option></select>
+      <select id="stock-status">
+        <option value="">All statuses</option>
+        <option value="in">In stock</option>
+        <option value="low">Low stock</option>
+        <option value="out">Out of stock</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>ID</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th><th>Status</th></tr></thead>
+        <tbody id="all-stock-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Category Wise -->
+<div class="report-panel hidden" id="tab-cat-wise">
+  <div class="card">
+    <div class="card-head"><h3>Stock — Category Wise Summary</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Category</th><th class="num">Products</th><th class="num">Total Units</th><th class="num">Total Value</th></tr></thead>
+        <tbody id="cat-wise-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="cat-charts" class="card" style="margin-top:1rem">
+    <h3>Units per category</h3>
+    <div id="cat-bar-chart"></div>
+  </div>
+</div>
+
+<!-- High Stock -->
+<div class="report-panel hidden" id="tab-high-stock">
+  <div class="card">
+    <div class="card-head"><h3>High Stock Products (Qty &gt; 100)</h3><span id="high-count" class="badge in"></span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th></tr></thead>
+        <tbody id="high-stock-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Low Stock -->
+<div class="report-panel hidden" id="tab-low-stock">
+  <div class="card">
+    <div class="card-head"><h3>Low Stock Products (Qty &lt; 15, excluding 0)</h3><span id="low-count" class="badge warn"></span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th><th>Alert</th></tr></thead>
+        <tbody id="low-stock-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../../services/firebase-config.js"></script>
+<script src="../../services/seed-data.js"></script>
+<script src="../../services/api-service.js"></script>
+<script src="../../services/auth-service.js"></script>
+<script src="../../services/category-service.js"></script>
+<script src="../../services/product-service.js"></script>
+<script src="../../services/customer-service.js"></script>
+<script src="../../services/order-service.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/inventory-report.js"></script>
+</body>
+</html>

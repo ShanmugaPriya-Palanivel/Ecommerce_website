@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · MarketHub Admin</title>
+<meta name="description" content="MarketHub Admin Dashboard — live overview of products, customers, orders and revenue.">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body data-root="../" data-page="dashboard" data-title="Dashboard">
+<div class="app">
+<aside class="sidebar" data-component="admin-sidebar"></aside>
+<div class="overlay"></div>
+<div class="main">
+<header class="topbar" data-component="admin-header"></header>
+<main class="content">
+<div class="page-head"><div><h1>Dashboard</h1><p>Live overview calculated from your stored data.</p></div></div>
+<section class="stats-grid" id="stats"></section>
+<section class="dash-grid">
+  <div class="card">
+    <h3>Stock by category</h3>
+    <div id="cat-chart"></div>
+  </div>
+  <div class="card">
+    <h3>Stock summary</h3>
+    <div class="summary">
+      <div class="donut" id="donut" data-total="0"></div>
+      <ul class="legend" id="legend"></ul>
+    </div>
+  </div>
+  <div class="card span2">
+    <div class="card-head"><h3>Recent products</h3><a href="inventory/inventory-list.html">View all</a></div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Product</th><th>Category</th><th class="num">Qty</th><th class="num">Price</th><th>Status</th></tr></thead>
+      <tbody id="recent-products"></tbody></table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h3>Recent customers</h3><a href="customers/customer-list.html">View all</a></div>
+    <ul class="list" id="recent-customers"></ul>
+  </div>
+  <div class="card">
+    <div class="card-head"><h3>Recent orders</h3><a href="orders/order-list.html">View all</a></div>
+    <ul class="list" id="recent-orders"></ul>
+  </div>
+  <div class="card">
+    <h3>Recent inventory activity</h3>
+    <ul class="list" id="activity"></ul>
+  </div>
+  <div class="card span2"><h3>Quick actions</h3><div class="quick">
+    <a href="categories/category-form.html"><i data-icon="tag"></i>Add category</a>
+    <a href="inventory/product-form.html"><i data-icon="box"></i>Add product</a>
+    <a href="customers/customer-form.html"><i data-icon="users"></i>Add customer</a>
+    <a href="credit/credit-management.html"><i data-icon="card"></i>Credit limits</a>
+    <a href="reports/sales-report.html"><i data-icon="layers"></i>Sales report</a>
+    <button type="button" id="reset-data"><i data-icon="refresh"></i>Reset sample data</button>
+    <button type="button" id="import-firebase-data"><i data-icon="refresh"></i>Import seed to Firebase</button>
+  </div></div>
+</section>
+</main>
+<footer class="footer" data-component="admin-footer"></footer>
+</div>
+</div>
+<script src="../services/firebase-config.js"></script>
+<script src="../services/seed-data.js"></script>
+<script src="../services/api-service.js"></script>
+<script src="../services/auth-service.js"></script>
+<script src="../services/category-service.js"></script>
+<script src="../services/product-service.js"></script>
+<script src="../services/customer-service.js"></script>
+<script src="../services/order-service.js"></script>
+<script src="../services/firebase-seed-service.js"></script>
+<script src="../js/validation.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>
